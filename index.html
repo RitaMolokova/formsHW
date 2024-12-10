@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div{
+        background-color: rgb(186, 239, 219);
+        width: 430px;
+    }
+    p {
+        display: inline-block;
+    }
+    #fuelType{
+        margin-right: 15px;
+    }
+    h2{
+        margin: 0;
+    }
+    #pay{
+        background-color: rgb(180, 210, 250);
+    }
+    #Ok{
+        margin-left: 120px;
+    }
+</style>
+
+<body>
+    <form name="fuelStation">
+        <div>
+        <p>Тип топлива:</p>
+        <input list="choiseFuel" id="fuelType" type="text">
+        <p>Стоимость: </p> <p id="price"></p>
+        </div>
+        <div>
+        <p>Количество: </p>
+        <input id="numLiters" type="number" min="1" max="100">
+        <p>литров</p>
+        </div>
+        <div id="pay">
+        <h2>ОПЛАТА</h2>
+        <p>Валюта: </p>
+        <input name="pay" type="radio" value="UAH">UAH
+        <input name="pay" type="radio" value="EURO">EURO
+        <input name="pay" type="radio" value="USD">USD
+        <br>
+        <p id="finalSum">Суммма к оплате: </p>
+        <input id="Ok" type="submit" placeholder="OK">
+        </div>
+    </form>
+    <datalist id="choiseFuel">
+        <option value="80">80</option>
+        <option value="92">92</option>
+        <option value="95">95</option>
+        <option value="95">98</option>
+        <option value="Газ">Газ</option>
+    </datalist>
+    <script>
+        let price = document.querySelector("#price");
+        let numLiters = document.querySelector("#numLiters");
+        let currency = document.querySelectorAll('input[name = "pay"]')
+        let finalSum = document.querySelector("#finalSum");
+
+        function selCurrency() {
+            let finalCurrency = document.querySelector('input[name = "pay"]:checked');
+            if (finalCurrency) {
+                return finalCurrency.value;
+            }
+            else {
+                return 0;
+            }
+        }
+
+        function check(e) {
+            let fuelPrice = 0;
+            if (e.target.value == 80){
+                fuelPrice = 100;
+                price.innerHTML = "100 $";
+            }
+            else if (e.target.value == 92) {
+                fuelPrice = 105;
+                price.innerHTML = "105 $";
+            } 
+            else if (e.target.value == 95) {
+                fuelPrice = 110;
+                price.innerHTML = "110 $";
+            } 
+            else if (e.target.value == 98) {
+                fuelPrice = 120;
+                price.innerHTML = "120 $";
+            } 
+            else if (e.target.value == "Газ") {
+                fuelPrice = 90;
+                price.innerHTML = "90 $";
+            } 
+            else {
+                price.innerHTML = "";
+            }
+
+            let currencyy = selCurrency();
+            if (currencyy && numLiters.value) {
+                let nameCurrency = "";
+                if (currencyy === "UAH") {
+                    nameCurrency = "₴";
+                }
+                else if (currencyy === "EU") {
+                    nameCurrency = "€";
+                } 
+                else if (currencyy === "UAH") {
+                    nameCurrency = "₴";
+                }
+                finalSum.innerHTML = "Сумма к оплате: " + (fuelPrice * numLiters.value) + nameCurrency;
+            }
+        }
+        document.querySelector("#fuelType").addEventListener("input", check);
+        numLiters.addEventListener("input", check);
+        currency.forEach(radio => radio.addEventListener('change', check));
+    </script>
+</body>
+
+</html>
