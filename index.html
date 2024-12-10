@@ -114,12 +114,14 @@
                 else if (currencyy === "UAH") {
                     nameCurrency = "₴";
                 }
-                finalSum.innerHTML = "Сумма к оплате: " + (fuelPrice * numLiters.value) + nameCurrency;
+                let finalResult = fuelPrice * numLiters.value;
+                finalSum.innerHTML = "Сумма к оплате: " + finalResult + nameCurrency;
             }
         }
         document.querySelector("#fuelType").addEventListener("input", check);
         numLiters.addEventListener("input", check);
         currency.forEach(radio => radio.addEventListener('change', check));
+        alert(`Стоимость: ${finalResult} ${nameCurrency}`);
     </script>
 </body>
 
